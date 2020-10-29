@@ -1,0 +1,26 @@
+<annotation>
+	<folder>Calio S_CalioS BMS</folder>
+	<filename>1.PNG</filename>
+	<path>C:\Users\Mwomada\Desktop\Bilderdaten\Calio S_CalioS BMS\1.PNG</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>657</width>
+		<height>590</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>Calio S / Calio BMS</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>35</xmin>
+			<ymin>9</ymin>
+			<xmax>624</xmax>
+			<ymax>567</ymax>
+		</bndbox>
+	</object>
+</annotation>
