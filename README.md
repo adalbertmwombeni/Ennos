@@ -1,2 +1,2 @@
 # Ennos
-Product recognition
+Products recognition
