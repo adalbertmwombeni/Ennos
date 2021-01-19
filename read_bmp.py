@@ -25,18 +25,15 @@ def read_file(filename):
     return pixel,rgb[0],rgb[1],rgb[2]
 
 def count_pixel(pixel):
+    # One pixel is represented by b bits (1 Byte)
+    # The maximum of color that can be displayed at one time is 256 = 2°(8)
     r = [0] * 256
     g = [0] * 256
     b = [0] * 256
-    k = 0
     for i in pixel:
-
-        r[i[0]] += 1
+        r[i[0]] += 1 # increment 1 to the number of pixels counted before at specific position
         g[i[1]] += 1
         b[i[2]] += 1
-    print("r: ", r)
-    print("g: ", g)
-    print("b: ", b)
     return r, g, b
 
 
