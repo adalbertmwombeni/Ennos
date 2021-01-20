@@ -1,4 +1,5 @@
-# this file is dataset_utils
+# this file is dataset_utils, ennos_utils
+from task_4 import *
 import numpy as np
 from typing import Dict, List, Optional, Tuple, Union
 import os
@@ -6,7 +7,7 @@ import csv
 
 def read_calibration(calib_dir: str) -> Dict[str, np.ndarray]:
     data_file = open(os.path.join('C:/Users/Mwomada/Desktop/ennos/object/training/calibration/calib_distorted.txt'), 'r')
-    data_reader =csv.reader(data_file, delimiter='')
+    data_reader =csv.reader(data_file, delimiter=' ')
     lines = [line for line in data_reader]
     data_file.close()
     calibration: Dict[str, np.ndarray] = dict()
@@ -46,14 +47,14 @@ def get_point_cloud(depth_map: np.ndarray, image_shape: Tuple[int, int]) -> np.n
     # Convert from millimeters to meters
     z /= 1000
 
-    #calibration_applied = read_calibration('C:/Users/Mwomada/Desktop/ennos/object/training/calibration/calib_distorted.txt')
-    #inverted_camera_matrix = np.linalg.inv(calibration_applied)
-    pts = z.T
-    """
+    calibration_applied = read_calibration('C:/Users/Mwomada/Desktop/ennos/object/training/calibration/calib_distorted.txt')
+    inverted_camera_matrix = np.linalg.inv(calibration_applied['k_depth'])
+
+
     pts = z * np.dot(inverted_camera_matrix, pts.T).T
     
     # Project points to WCS
-    word_points = transform_points(calibration_applied['r_depth'], calibration_applied['t_depth'], inverse=True)
-    """
-    return pts
-    #return word_points.transpose()
+    word_points = transform_points(pts, calibration_applied['r_depth'], calibration_applied['t_depth'], inverse=True)
+
+    #return pts
+    return word_points.transpose()
