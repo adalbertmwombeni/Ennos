@@ -3,13 +3,13 @@ from PIL import Image
 from task_3 import *
 
 # read RGB image from file
-pil_image_input = Image.open('C:/Users/Mwomada/Desktop/ennos/object/training/image/000000.png')
+pil_image_input = Image.open('C:/Users/Mwomada/Desktop/ennos/object/training/image/0000001.bmp')
 image_shape = (pil_image_input.height, pil_image_input.width)
 image_input = np.asarray(pil_image_input)
 print("rgb_image: ", image_input)
 
 # get point cloud from depth image
-depth_map = np.asarray(Image.open('C:/Users/Mwomada/Desktop/ennos/object/training/depth/000000.png'))
+depth_map = np.asarray(Image.open('C:/Users/Mwomada/Desktop/ennos/object/training/depth/0000001.png'))
 point_cloud = get_point_cloud(depth_map, image_shape)
 print("=============================")
 print("point_cloud: ", point_cloud.T)
@@ -68,20 +68,20 @@ def birds_eye_point_cloud(points,
                     Filename to save the image as.
                     If None, then it just displays the image.
     """
-    x_lidar = points[:, 0]
-    y_lidar = points[:, 1]
-    z_lidar = points[:, 2]
-    # r_lidar = points[:, 3]  # Reflectance
+    x_tof = points[:, 0]
+    y_tof = points[:, 1]
+    z_tof = points[:, 2]
+    # r_tof = points[:, 3]  # Reflectance
 
     # INDICES FILTER - of values within the desired rectangle
-    # Note left side is positive y axis in LIDAR coordinates
-    ff = np.logical_and((x_lidar > fwd_range[0]), (x_lidar < fwd_range[1]))
-    ss = np.logical_and((y_lidar > -side_range[1]), (y_lidar < -side_range[0]))
+    # Note left side is positive y axis in TOF coordinates
+    ff = np.logical_and((x_tof > fwd_range[0]), (x_tof < fwd_range[1]))
+    ss = np.logical_and((y_tof > -side_range[1]), (y_tof < -side_range[0]))
     indices = np.argwhere(np.logical_and(ff,ss)).flatten()
 
     # CONVERT TO PIXEL POSITION VALUES - Based on resolution
-    x_img = (-y_lidar[indices]/res).astype(np.int32) # x axis is -y in LIDAR
-    y_img = (x_lidar[indices]/res).astype(np.int32)  # y axis is -x in LIDAR
+    x_img = (-y_tof[indices]/res).astype(np.int32) # x axis is -y in TOF
+    y_img = (x_tof[indices]/res).astype(np.int32)  # y axis is -x in TOF
                                                      # will be inverted later
 
     # SHIFT PIXELS TO HAVE MINIMUM BE (0,0)
@@ -90,7 +90,7 @@ def birds_eye_point_cloud(points,
     y_img -= int(np.floor(fwd_range[0]/res))
 
     # CLIP HEIGHT VALUES - to between min and max heights
-    pixel_values = np.clip(a = z_lidar[indices],
+    pixel_values = np.clip(a = z_tof[indices],
                            a_min=min_height,
                            a_max=max_height)
 
