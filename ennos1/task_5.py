@@ -1,23 +1,17 @@
 import numpy as np
+
 from PIL import Image
 from task_3 import *
 
 # read RGB image from file
-pil_image_input = Image.open('C:/Users/Mwomada/Desktop/ennos/object/training/image/000000.png')
-image_shape = (pil_image_input.height, pil_image_input.width)
-image_input = np.asarray(pil_image_input)
-print("rgb_image: ", image_input)
+pil_image_input = Image.open('C:/Users/Mwomada/Desktop/ennos/object/training/image/0000001.bmp')
 
-# get point cloud from depth image
-depth_map = np.asarray(Image.open('C:/Users/Mwomada/Desktop/ennos/object/training/depth/000000.png'))
-point_cloud = get_point_cloud(depth_map, image_shape)
-print("=============================")
-print("point_cloud: ", point_cloud.T)
-print("type: ", type(point_cloud))
+# Numpy point cloud to image
 
+points=np.array([[1,0,0,2,8],[2,1,1,0,2],[0,1,1,1,6]])#,[1,9,0,2],[2,6,1,0],[0,1,1,10]])
 img_size=(180, 240)
 image=np.zeros(img_size)
-points = point_cloud.T
+
 for point in points:
     pass
     #each point = [x,y,z,v]
@@ -25,12 +19,19 @@ for point in points:
 from PIL import Image
 import numpy as np
 
+# ==============================================================================
+#                                                                   SCALE_TO_255
+# ==============================================================================
 def scale_to_255(a, min, max, dtype=np.uint8):
     """ Scales an array of values from specified min, max range to 0-255
         Optionally specify the data type of the output (default is uint8)
     """
     return (((a - min) / float(max - min)) * 255).astype(dtype)
 
+
+# ==============================================================================
+#                                                          BIRDS_EYE_POINT_CLOUD
+# ==============================================================================
 def birds_eye_point_cloud(points,
                           side_range=(-10, 10),
                           fwd_range=(-10,10),

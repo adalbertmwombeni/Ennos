@@ -56,5 +56,4 @@ def get_point_cloud(depth_map: np.ndarray, image_shape: Tuple[int, int]) -> np.n
     # Project points to WCS
     word_points = transform_points(pts, calibration_applied['r_depth'], calibration_applied['t_depth'], inverse=True)
 
-    #return pts
     return word_points.transpose()
